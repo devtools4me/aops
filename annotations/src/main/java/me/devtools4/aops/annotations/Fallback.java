@@ -11,14 +11,13 @@ public @interface Fallback {
 
   String FALLBACK_ANNOTATION = "@annotation(me.devtools4.aops.annotations.Fallback)";
 
-  Type type() default Type.Log;
+  Type type() default Type.None;
+
+  int maxSize() default 500;
+
+  String method() default "fallback";
 
   enum Type {
-    Log, FuncCall
-  }
-
-  @FunctionalInterface
-  interface FallbackFunction {
-    void apply(Object... other);
+    None, Log, Method
   }
 }

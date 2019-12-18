@@ -1,21 +1,21 @@
 package me.devtools4.aops.aspects;
 
 import me.devtools4.aops.annotations.Idempotent;
-import me.devtools4.aops.annotations.Idempotent.IdempotentRepository;
+import me.devtools4.aops.annotations.Idempotent.IdempotentSupplier;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 @Aspect
 public class IdempotentAspect {
-  private final IdempotentRepository repository;
+  private final IdempotentSupplier func;
 
-  public IdempotentAspect(IdempotentRepository repository) {
-    this.repository = repository;
+  public IdempotentAspect(IdempotentSupplier func) {
+    this.func = func;
   }
 
   @Around(Idempotent.IDEMPOTENT_ANNOTATION)
   public Object around(ProceedingJoinPoint point) throws Throwable {
-    return repository.getOrProceed(point.getArgs(), point::proceed);
+    return func.getIfAbsent(point.getArgs(), point::proceed);
   }
 }

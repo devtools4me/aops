@@ -7,11 +7,12 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Instrumentation {
+public @interface TimerMetric {
 
-  String INSTRUMENTATION_ANNOTATION = "@annotation(me.devtools4.aops.annotations.Instrumentation)";
+  String TIMER_METRIC_ANNOTATION = "@annotation(me.devtools4.aops.annotations.TimerMetric)";
 
-  interface TimerRegistry<T> {
-    T timer(Class<?> clazz, String... names);
+  @FunctionalInterface
+  interface TimerSupplier<T> {
+    T get(Class<?> clazz, String... names);
   }
 }

@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
 public @interface Trace {
 
   String TRACE_ANNOTATION = "@annotation(me.devtools4.aops.annotations.Trace)";
+
+  String level() default "TRACE";
 }
