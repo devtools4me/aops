@@ -28,7 +28,7 @@
     <dependency>
       <groupId>me.devtools4.aops</groupId>
       <artifactId>aops-aspects</artifactId>
-      <version>${parent.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.aspectj</groupId>
