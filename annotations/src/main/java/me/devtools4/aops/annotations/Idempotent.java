@@ -28,6 +28,6 @@ public @interface Idempotent {
 
   @FunctionalInterface
   interface IdempotentSupplier {
-    Object getIfAbsent(Object[] args, CheckedSupplier<Object> func);
+    Object getIfAbsent(Class<?> clazz, String signature, Object[] args, CheckedSupplier<Object> func);
   }
 }

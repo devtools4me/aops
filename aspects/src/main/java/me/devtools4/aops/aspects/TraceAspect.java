@@ -24,19 +24,18 @@ public class TraceAspect {
       return point.proceed();
     }
 
-    String signature = sig.toShortString();
-    log(targetLogger, level, "{} with args: {}", signature, (Object) point.getArgs());
+    log(targetLogger, level, "{} with args: {}", sig.toShortString(), (Object) point.getArgs());
 
     long start = System.currentTimeMillis();
     Object proceed = point.proceed();
     long executionTime = System.currentTimeMillis() - start;
 
-    log(targetLogger, level, "{} executed in {} ms, result: [{}]", signature, executionTime, result(proceed));
+    log(targetLogger, level, "{} executed in {} ms, result: [{}]", sig.toShortString(), executionTime, result(proceed));
 
     return proceed;
   }
 
-  private boolean isEnabled(Logger logger, Level level) {
+  private static boolean isEnabled(Logger logger, Level level) {
     switch (level) {
       case TRACE:
         return logger.isTraceEnabled();
@@ -53,7 +52,7 @@ public class TraceAspect {
     }
   }
 
-  private void log(Logger logger, Level level, String format, Object... args) {
+  private static void log(Logger logger, Level level, String format, Object... args) {
     switch (level) {
       case TRACE: {
         logger.trace(format, args);

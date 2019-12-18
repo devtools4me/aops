@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 
 @Aspect
 public class IdempotentAspect {
+
   private final IdempotentSupplier func;
 
   public IdempotentAspect(IdempotentSupplier func) {
@@ -15,7 +16,10 @@ public class IdempotentAspect {
   }
 
   @Around(Idempotent.IDEMPOTENT_ANNOTATION)
-  public Object around(ProceedingJoinPoint point) throws Throwable {
-    return func.getIfAbsent(point.getArgs(), point::proceed);
+  public Object around(ProceedingJoinPoint point) {
+    return func.getIfAbsent(point.getTarget().getClass(),
+        point.getSignature().toShortString(),
+        point.getArgs(),
+        point::proceed);
   }
 }

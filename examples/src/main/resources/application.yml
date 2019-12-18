@@ -6,4 +6,5 @@ spring:
     name: Example API
   main:
     banner-mode: 'off'
-
+  jmx:
+    enabled: true

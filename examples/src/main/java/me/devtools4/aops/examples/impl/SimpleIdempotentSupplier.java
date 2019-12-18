@@ -15,8 +15,9 @@ public class SimpleIdempotentSupplier implements IdempotentSupplier {
   }
 
   @Override
-  public Object getIfAbsent(Object[] args, CheckedSupplier<Object> func) {
-    String key = hmac(Arrays.stream(args)
+  public Object getIfAbsent(Class<?> clazz, String signature, Object[] args, CheckedSupplier<Object> func) {
+    String key = clazz.getCanonicalName() + "-" + signature + "-" +
+        hmac(Arrays.stream(args)
         .map(Object::toString)
         .reduce("", (s1, s2) -> s1 + s2));
     map.computeIfAbsent(key, x -> func.unchecked().get());
